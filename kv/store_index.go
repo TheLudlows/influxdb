@@ -41,7 +41,7 @@ func (s *IndexStore) Delete(ctx context.Context, tx Tx, opts DeleteOpts) error {
 	defer span.Finish()
 
 	deleteIndexedRelationFn := func(k []byte, v interface{}) error {
-		ent, err := s.EntStore.DecodeToEntFn(k, v)
+		ent, err := s.EntStore.ConvertValToEntFn(k, v)
 		if err != nil {
 			return err
 		}
@@ -65,7 +65,7 @@ func (s *IndexStore) DeleteEnt(ctx context.Context, tx Tx, ent Entity) error {
 		return err
 	}
 
-	decodedEnt, err := s.EntStore.DecodeToEntFn(nil, existing)
+	decodedEnt, err := s.EntStore.ConvertValToEntFn(nil, existing)
 	if err != nil {
 		return err
 	}
@@ -141,7 +141,7 @@ func (s *IndexStore) indexFilterStream(ctx context.Context, tx Tx, entFilterFn F
 				close(kvStream)
 			}
 		}()
-		ent, err := s.IndexStore.DecodeToEntFn(key, indexVal)
+		ent, err := s.IndexStore.ConvertValToEntFn(key, indexVal)
 		if err != nil {
 			return send(nil, nil, err)
 		}
@@ -213,7 +213,7 @@ func (s *IndexStore) findByIndex(ctx context.Context, tx Tx, ent Entity) (interf
 		return nil, err
 	}
 
-	indexEnt, err := s.IndexStore.DecodeToEntFn(indexKey, idxEncodedID)
+	indexEnt, err := s.IndexStore.ConvertValToEntFn(indexKey, idxEncodedID)
 	if err != nil {
 		return nil, err
 	}

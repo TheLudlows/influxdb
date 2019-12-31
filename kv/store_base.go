@@ -97,21 +97,21 @@ type StoreBase struct {
 	Resource string
 	BktName  []byte
 
-	EncodeEntKeyFn  EncodeEntFn
-	EncodeEntBodyFn EncodeEntFn
-	DecodeEntFn     DecodeBucketValFn
-	DecodeToEntFn   ConvertValToEntFn
+	EncodeEntKeyFn    EncodeEntFn
+	EncodeEntBodyFn   EncodeEntFn
+	DecodeEntFn       DecodeBucketValFn
+	ConvertValToEntFn ConvertValToEntFn
 }
 
 // NewStoreBase creates a new store base.
 func NewStoreBase(resource string, bktName []byte, encKeyFn, encBodyFn EncodeEntFn, decFn DecodeBucketValFn, decToEntFn ConvertValToEntFn) *StoreBase {
 	return &StoreBase{
-		Resource:        resource,
-		BktName:         bktName,
-		EncodeEntKeyFn:  encKeyFn,
-		EncodeEntBodyFn: encBodyFn,
-		DecodeEntFn:     decFn,
-		DecodeToEntFn:   decToEntFn,
+		Resource:          resource,
+		BktName:           bktName,
+		EncodeEntKeyFn:    encKeyFn,
+		EncodeEntBodyFn:   encBodyFn,
+		DecodeEntFn:       decFn,
+		ConvertValToEntFn: decToEntFn,
 	}
 }
 
