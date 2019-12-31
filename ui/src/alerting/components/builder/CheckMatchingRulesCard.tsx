@@ -6,12 +6,17 @@ import {connect} from 'react-redux'
 import MatchingRuleCard from 'src/alerting/components/builder/MatchingRuleCard'
 import {SpinnerContainer, TechnoSpinner} from '@influxdata/clockface'
 
+// Selectors
+import {getOrg} from 'src/organizations/selectors'
+
 // API
 import * as api from 'src/client'
 
 //Types
 import {NotificationRule, AppState, CheckTagSet} from 'src/types'
 import {EmptyState, ComponentSize, RemoteDataState} from '@influxdata/clockface'
+
+// Selectors
 
 interface StateProps {
   tags: CheckTagSet[]
@@ -94,11 +99,9 @@ const CheckMatchingRulesCard: FunctionComponent<StateProps> = ({
 
 const mstp = (state: AppState): StateProps => {
   const {
-    orgs: {
-      org: {id: orgID},
-    },
     alertBuilder: {tags},
   } = state
+  const {id: orgID} = getOrg(state)
 
   return {tags, orgID}
 }
